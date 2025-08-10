@@ -27,7 +27,7 @@ app.use("/api/v1", router);
 
 app.get("/", async (req: Request, res: Response, next) => {
   try {
-    res.send("Skillscale Academy Server is running!");
+    res.send("lerning management system is running!");
   } catch (err) {
     console.log(err);
     next(err);
