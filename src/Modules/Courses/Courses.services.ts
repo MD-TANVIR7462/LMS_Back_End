@@ -12,7 +12,6 @@ const getAllCourses = async () => {
     isDeleted: false,
     isActive: true,
   };
-  console.log(queryFilter);
   const res = await CourseModel.find(queryFilter);
   return res;
 };
