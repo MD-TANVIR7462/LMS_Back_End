@@ -42,6 +42,8 @@ const moduleSchema = new Schema<IModule>(
   },
   {
     timestamps: true,
+    versionKey:false
+
   }
 );
 
