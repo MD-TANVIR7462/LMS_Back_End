@@ -31,11 +31,17 @@ export const alreadyExist = (res: Response, data: any) => {
     data,
   });
 };
-export const success = (res: Response, data: any, message: string, total?: number) => {
-  res.status(statusCodes.create).json({
+export const success = (res: Response, data: any, message: string, total?: number,statusCode: number=statusCodes.ok) => {
+  res.status(statusCode).json({
     success: true,
     message: `${message} successfully`,
     ...(total !== undefined && { total }),
     data,
+  });
+};
+export const anyError = (res: Response, message: string) => {
+  res.status(statusCodes.serviceUnavaiAble).json({
+    success: true,
+    message: `${message} successfully`,
   });
 };
