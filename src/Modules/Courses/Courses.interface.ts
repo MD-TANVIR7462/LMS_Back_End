@@ -1,10 +1,11 @@
-import { ObjectId } from "mongoose";
+import { Types } from "mongoose";
+
 export interface ICourse {
   title: string;
-  thumbnail: string; 
+  thumbnail: string;
   price: number;
   description: string;
-  createdBy: ObjectId;
+  createdBy: Types.ObjectId;
   isActive: boolean;
   tags?: string[];
   language?: string;

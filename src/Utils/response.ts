@@ -17,12 +17,12 @@ export const notUpdated = (res: Response, id: string, data: any) => {
   });
 };
 
-export const notGiven=(res:Response)=>{
+export const notGiven = (res: Response) => {
   res.status(statusCodes.serviceUnavaiAble).json({
-    success:false,
-    message:"Missing required fields. Please provide all necessary credentials."
-  })
-}
+    success: false,
+    message: "Missing required fields. Please provide all necessary credentials.",
+  });
+};
 
 export const alreadyExist = (res: Response, data: any) => {
   res.status(statusCodes.conflict).json({
@@ -32,7 +32,7 @@ export const alreadyExist = (res: Response, data: any) => {
   });
 };
 export const success = (res: Response, data: any, message: string, total?: number) => {
-  res.status(statusCodes.ok).json({
+  res.status(statusCodes.create).json({
     success: true,
     message: `${message} successfully`,
     ...(total !== undefined && { total }),
