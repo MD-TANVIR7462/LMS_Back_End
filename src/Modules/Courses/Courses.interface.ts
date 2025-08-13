@@ -5,6 +5,7 @@ export interface ICourse {
   thumbnail: string;
   price: number;
   description: string;
+  modules?:Types.ObjectId[]
   createdBy: Types.ObjectId;
   isActive?: boolean;
   language?: string;

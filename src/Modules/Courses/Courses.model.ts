@@ -24,6 +24,10 @@ const courseSchema = new Schema<ICourse>(
       required: [true, "Course description is required"],
       trim: true,
     },
+    modules: {
+      type: [{ type: Schema.Types.ObjectId, ref: "Module" }],
+      default: [],
+    },
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: "User",

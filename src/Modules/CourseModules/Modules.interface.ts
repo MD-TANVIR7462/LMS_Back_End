@@ -4,7 +4,7 @@ export interface IModule {
   courseId: Types.ObjectId;
   title: string;
   moduleNumber: number;
-  description: string;
+  lectures?:Types.ObjectId
   totalLectures?: number;
   isActive?: boolean;
   isDeleted?: boolean;
