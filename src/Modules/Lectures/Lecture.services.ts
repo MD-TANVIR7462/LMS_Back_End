@@ -1,63 +1,56 @@
 import { Types } from "mongoose";
-import { IModule } from "./Modules.interface";
-import { ModuleModel } from "./Modules.model";
+import { LecturesModel } from "./Lecture.model";
+import { ILectures } from "./Lecture.interface";
 
-const createAModule = async (module: IModule) => {
-  const res = await ModuleModel.create(module);
+
+
+const createALecture = async (lecture: ILectures) => {
+  const res = await LecturesModel.create(lecture);
   return res;
 };
 
-const getAllModules = async () => {
-  const queryFilter = {
-    isDeleted: false,
-    isActive: true,
-  };
-  const res = await ModuleModel.find(queryFilter).populate("courseId");
+
+const getAllLectures = async () => {
+  const queryFilter = { isDeleted: false };
+  const res = await LecturesModel.find(queryFilter).populate("moduleId");
   return res;
 };
 
-const getSingleModule = async (id: string) => {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new Error("Invalid module ID");
-  }
-  const res = await ModuleModel.findById(id).populate("courseId");
+const getSingleLecture = async (id: string) => {
+  if (!Types.ObjectId.isValid(id)) throw new Error("Invalid lecture ID");
+  const res = await LecturesModel.findById(id).populate("moduleId");
   return res;
 };
 
-const updateModule = async (id: string, payload: Partial<IModule>) => {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new Error("Invalid module ID");
-  }
-  const res = await ModuleModel.findByIdAndUpdate(id, payload, { new: true });
+
+const updateLecture = async (id: string, payload: Partial<ILectures>) => {
+  if (!Types.ObjectId.isValid(id)) throw new Error("Invalid lecture ID");
+  const res = await LecturesModel.findByIdAndUpdate(id, payload, { new: true });
   return res;
 };
 
-const deleteModule = async (id: string) => {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new Error("Invalid module ID");
-  }
-  const res = await ModuleModel.findByIdAndDelete(id);
+
+const deleteLecture = async (id: string) => {
+  if (!Types.ObjectId.isValid(id)) throw new Error("Invalid lecture ID");
+  const res = await LecturesModel.findByIdAndDelete(id);
   return res;
 };
 
-const toggleModuleStatus = async (id: string) => {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new Error("Invalid module ID");
-  }
-  const module = await ModuleModel.findById(id);
-  if (!module) {
-    throw new Error("Module not found");
-  }
-  module.isActive = !module.isActive;
-  await module.save();
-  return module;
+
+const toggleLectureStatus = async (id: string) => {
+  if (!Types.ObjectId.isValid(id)) throw new Error("Invalid lecture ID");
+  const lecture = await LecturesModel.findById(id);
+  if (!lecture) throw new Error("Lecture not found");
+  lecture.isDeleted = !lecture.isDeleted;
+  await lecture.save();
+  return lecture;
 };
 
-export const moduleServices = {
-  createAModule,
-  getAllModules,
-  getSingleModule,
-  updateModule,
-  deleteModule,
-  toggleModuleStatus,
+export const lecturesServices = {
+  createALecture,
+  getAllLectures,
+  getSingleLecture,
+  updateLecture,
+  deleteLecture,
+  toggleLectureStatus,
 };

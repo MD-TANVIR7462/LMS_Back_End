@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Types } from "mongoose";
 
-// Custom ObjectId validator
+
 const objectIdSchema = z.string().refine((val) => Types.ObjectId.isValid(val), {
   message: "Invalid ObjectId",
 });
@@ -20,5 +20,3 @@ export const lecturesValidationSchema = z.object({
     .optional(),
   isDeleted: z.boolean().optional(),
 });
-
-export type LecturesInput = z.infer<typeof lecturesValidationSchema>;

@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { ModuleControllers } from "./Modules.controller";
+import { LecturesControllers } from "./Lecture.controller";
 
 const router = Router();
 
-router.get("/get-modules", ModuleControllers.getAllModules);
-router.get("/get-module/:id", ModuleControllers.getSingleModule);
-router.post("/create-module", ModuleControllers.createAModule);
-router.delete("/delete-module/:id", ModuleControllers.deleteModule);
-router.patch("/update-module/:id", ModuleControllers.updateModule);
-router.patch("/status/:id", ModuleControllers.toggleModuleStatus);
+router.get("/get-lectures", LecturesControllers.getAllLectures);
+router.get("/get-lecture/:id", LecturesControllers.getSingleLecture);
+router.post("/create-lecture", LecturesControllers.createALecture);
+router.delete("/delete-lecture/:id", LecturesControllers.deleteLecture);
+router.patch("/update-lecture/:id", LecturesControllers.updateLecture);
+router.patch("/status/:id", LecturesControllers.toggleLectureStatus);
 
-export const moduleRoutes = router;
+export const lectureRoutes = router;

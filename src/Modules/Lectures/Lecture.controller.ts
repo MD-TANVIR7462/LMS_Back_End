@@ -1,121 +1,104 @@
 import { RequestHandler } from "express";
 import { Types } from "mongoose";
-import { moduleUpdateValidationSchema, moduleValidationSchema } from "./Modules.validation";
-import { moduleServices } from "./Modules.services";
+
 import { success, emptyResponse, notUpdated } from "../../Utils/response";
 import { StatusCodes } from "http-status-codes";
+import { lecturesValidationSchema } from "./Lecture.validation";
+import { lecturesServices } from "./Lecture.services";
 
-const createAModule: RequestHandler = async (req, res, next) => {
+// Create lecture
+const createALecture: RequestHandler = async (req, res, next) => {
   try {
-    const parsedData = moduleValidationSchema.parse(req.body);
-
+    const parsedData = lecturesValidationSchema.parse(req.body);
     const validatedData = {
       ...parsedData,
-      courseId: new Types.ObjectId(parsedData.courseId),
+      moduleId: new Types.ObjectId(parsedData.moduleId),
     };
-
-    const result = await moduleServices.createAModule(validatedData);
-    success(res, result, "Module created", StatusCodes.CREATED);
+    const result = await lecturesServices.createALecture(validatedData);
+    success(res, result, "Lecture created", StatusCodes.CREATED);
   } catch (err) {
     next(err);
   }
 };
 
-const getAllModules: RequestHandler = async (req, res, next) => {
+// Get all lectures
+const getAllLectures: RequestHandler = async (req, res, next) => {
   try {
-    const result = await moduleServices.getAllModules();
-    if (!result.length) {
-      emptyResponse(res, result);
-    }
-    success(res, result, "Modules fetched", result.length);
+    const result = await lecturesServices.getAllLectures();
+    if (!result.length) emptyResponse(res, result);
+    success(res, result, "Lectures fetched", result.length);
   } catch (err) {
     next(err);
   }
 };
 
-const getSingleModule: RequestHandler = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-
-    if (!Types.ObjectId.isValid(id)) {
-      return notUpdated(res, id, null);
-    }
-
-    const result = await moduleServices.getSingleModule(id);
-    if (!result) {
-      return notUpdated(res, id, null);
-    }
-    success(res, result, "Module fetched");
-  } catch (err) {
-    next(err);
-  }
-};
-
-const updateModule: RequestHandler = async (req, res, next) => {
+// Get single lecture
+const getSingleLecture: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
+    if (!Types.ObjectId.isValid(id)) return notUpdated(res, id, null);
 
-    if (!Types.ObjectId.isValid(id)) {
-      return notUpdated(res, id, null);
-    }
+    const result = await lecturesServices.getSingleLecture(id);
+    if (!result) return notUpdated(res, id, null);
+    success(res, result, "Lecture fetched");
+  } catch (err) {
+    next(err);
+  }
+};
 
-    const parsedData = moduleUpdateValidationSchema.parse(req.body);
+// Update lecture
+const updateLecture: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!Types.ObjectId.isValid(id)) return notUpdated(res, id, null);
+
+    const parsedData = lecturesValidationSchema.partial().parse(req.body); // optional fields for update
     const validatedData = {
       ...parsedData,
-      courseId: parsedData.courseId ? new Types.ObjectId(parsedData.courseId) : undefined,
+      moduleId: parsedData.moduleId ? new Types.ObjectId(parsedData.moduleId) : undefined,
     };
 
-    const result = await moduleServices.updateModule(id, validatedData);
-    if (!result) {
-      return notUpdated(res, id, null);
-    }
-    success(res, result, "Module updated");
+    const result = await lecturesServices.updateLecture(id, validatedData);
+    if (!result) return notUpdated(res, id, null);
+    success(res, result, "Lecture updated");
   } catch (err) {
     next(err);
   }
 };
 
-const deleteModule: RequestHandler = async (req, res, next) => {
+// Delete lecture
+const deleteLecture: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
+    if (!Types.ObjectId.isValid(id)) return notUpdated(res, id, null);
 
-    if (!Types.ObjectId.isValid(id)) {
-      return notUpdated(res, id, null);
-    }
-
-    const result = await moduleServices.deleteModule(id);
-    if (!result) {
-      return notUpdated(res, id, null);
-    }
-    success(res, result, "Module deleted");
+    const result = await lecturesServices.deleteLecture(id);
+    if (!result) return notUpdated(res, id, null);
+    success(res, result, "Lecture deleted");
   } catch (err) {
     next(err);
   }
 };
 
-const toggleModuleStatus: RequestHandler = async (req, res, next) => {
+// Toggle lecture status
+const toggleLectureStatus: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
+    if (!Types.ObjectId.isValid(id)) return notUpdated(res, id, null);
 
-    if (!Types.ObjectId.isValid(id)) {
-      return notUpdated(res, id, null);
-    }
-
-    const result = await moduleServices.toggleModuleStatus(id);
-    if (!result) {
-      return notUpdated(res, id, null);
-    }
-    success(res, result, "Module status toggled");
+    const result = await lecturesServices.toggleLectureStatus(id);
+    if (!result) return notUpdated(res, id, null);
+    success(res, result, "Lecture status toggled");
   } catch (err) {
     next(err);
   }
 };
 
-export const ModuleControllers = {
-  createAModule,
-  getAllModules,
-  getSingleModule,
-  updateModule,
-  deleteModule,
-  toggleModuleStatus,
+export const LecturesControllers = {
+  createALecture,
+  getAllLectures,
+  getSingleLecture,
+  updateLecture,
+  deleteLecture,
+  toggleLectureStatus,
 };
