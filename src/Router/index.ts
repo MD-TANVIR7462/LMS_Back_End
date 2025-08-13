@@ -5,7 +5,7 @@ import { lectureRoutes } from "../Modules/Lectures/Lecture.routes";
 
 const router = Router();
 router.use("/course", CourseRoutes);
-router.use("/moduleRoutes", moduleRoutes);
-router.use("/lectureRoutes", lectureRoutes);
+router.use("/module", moduleRoutes);
+router.use("/lecture", lectureRoutes);
 
 export default router;
