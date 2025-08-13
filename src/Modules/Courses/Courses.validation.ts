@@ -14,10 +14,10 @@ export const courseSchemaValidation = z.object({
   modules: z.array(objectIdSchema).optional(),
   createdBy: z.string().refine((val) => mongoose.Types.ObjectId.isValid(val), {
     message: "Invalid createdBy ObjectId",
-  }),
+  }).optional(),
   isActive: z.boolean().optional(),
   language: z.string().optional().default("English"),
   isDeleted: z.boolean().optional(),
-});
+}).strict();
 
 export const courseUpdateSchemaValidation = courseSchemaValidation.partial();

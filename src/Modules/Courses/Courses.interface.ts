@@ -6,7 +6,7 @@ export interface ICourse {
   price: number;
   description: string;
   modules?:Types.ObjectId[]
-  createdBy: Types.ObjectId;
+  createdBy?: Types.ObjectId;
   isActive?: boolean;
   language?: string;
   isDeleted?:boolean

@@ -31,7 +31,7 @@ const courseSchema = new Schema<ICourse>(
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      // required: true,
     },
     isActive: {
       type: Boolean,
