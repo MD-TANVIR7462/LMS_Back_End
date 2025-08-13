@@ -12,7 +12,7 @@ const getAllCourses = async () => {
     isDeleted: false,
     isActive: true,
   };
-  const res = await CourseModel.find(queryFilter);
+  const res = await CourseModel.find(queryFilter).populate("modules");
   return res;
 };
 
@@ -20,7 +20,7 @@ const getSingleCourse = async (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
     throw new Error("Invalid course ID");
   }
-  const res = await CourseModel.findById(id);
+  const res = await CourseModel.findById(id).populate("modules");
   return res;
 };
 

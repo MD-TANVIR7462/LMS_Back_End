@@ -1,12 +1,40 @@
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { IModule } from "./Modules.interface";
 import { ModuleModel } from "./Modules.model";
+import { CourseModel } from "../Courses/Courses.model";
 
-const createAModule = async (module: IModule) => {
-  const res = await ModuleModel.create(module);
-  return res;
+export const createAModule = async (module: IModule) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    // Step 1: Find course within the transaction
+    const course = await CourseModel.findById(module.courseId).session(session);
+    if (!course) {
+      throw new Error("Course not found");
+    }
+
+    // Step 2: Create the module within the transaction
+    const newModule = await ModuleModel.create([module], { session });
+    const createdModule = newModule[0];
+
+    // Step 3: Push the module _id into course.modules
+    course.modules = course.modules || [];
+    course.modules.push(createdModule._id as Types.ObjectId);
+    await course.save({ session });
+
+    // Step 4: Commit the transaction
+    await session.commitTransaction();
+    session.endSession();
+
+    return createdModule;
+  } catch (error) {
+    // Rollback if something goes wrong
+    await session.abortTransaction();
+    session.endSession();
+    throw error;
+  }
 };
-
 const getAllModules = async () => {
   const queryFilter = {
     isDeleted: false,
