@@ -8,5 +8,7 @@ export interface ILectures {
     title: string;
     url: string;
   }[];
+  completedBy?: Types.ObjectId[];
+  isUnlocked?: boolean;
   isDeleted?: boolean;
 }

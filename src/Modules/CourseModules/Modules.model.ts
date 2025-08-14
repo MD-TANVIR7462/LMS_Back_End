@@ -20,7 +20,7 @@ const moduleSchema = new Schema<IModule>(
       required: [true, "Module number is required"],
       min: [1, "Module number must be at least 1"],
     },
-    lectures: [{ type: Schema.Types.ObjectId, ref: "Lectures", default: [] }],
+    lectures: [{ type: Schema.Types.ObjectId, ref: "Lectures", default: [], }],
     totalLectures: {
       type: Number,
       default: 0,

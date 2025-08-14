@@ -40,7 +40,7 @@ const getAllModules = async () => {
     isDeleted: false,
     isActive: true,
   };
-  const res = await ModuleModel.find(queryFilter).populate("courseId");
+  const res = await ModuleModel.find(queryFilter).populate("lectures");
   return res;
 };
 
@@ -48,7 +48,7 @@ const getSingleModule = async (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
     throw new Error("Invalid module ID");
   }
-  const res = await ModuleModel.findById(id).populate("courseId");
+  const res = await ModuleModel.findById(id).populate("lectures");
   return res;
 };
 

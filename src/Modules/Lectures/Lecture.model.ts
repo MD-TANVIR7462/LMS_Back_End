@@ -13,6 +13,8 @@ const lecturesSchema = new Schema<ILectures>(
     videoUrl: { type: String, required: true },
     pdfNotes: [pdfNotesSchema],
     isDeleted: { type: Boolean, default: false },
+    completedBy: { type: [Schema.Types.ObjectId], default: [] },
+    isUnlocked: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
