@@ -1,7 +1,8 @@
 import { Schema, model } from "mongoose";
 import { TResistration } from "./auth.interface";
 import bcrypt from "bcrypt";
-import { envConfig } from "../../../utils/config";
+import { envConfig } from "../../../Configs/envConfig";
+
 
 const registrationSchema = new Schema<TResistration>(
   {
@@ -29,7 +30,7 @@ const registrationSchema = new Schema<TResistration>(
     role: {
       type: String,
       required: [true, "Role is required."],
-      enum: ["admin", "superadmin"],
+      enum: ["admin", "user"],
     },
     location: {
       type: String,
