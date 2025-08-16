@@ -37,24 +37,6 @@ const getAllUsers: RequestHandler = async (req, res, next) => {
   }
 };
 
-// const getUserById: RequestHandler = async (req, res, next) => {
-//   try {
-//     const { id } = req.params;
-//     const data = await AuthServices.getUserById(id);
-//     if (!data) {
-//       emptyResponse(res, data);
-//       return;
-//     }
-//     res.status(200).json({
-//       success: true,
-//       message: "User retrieved successfully.",
-//       data,
-//     });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
 const updateUser: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
